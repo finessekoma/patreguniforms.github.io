@@ -1,0 +1,388 @@
+           
+header {
+    background-color: #3498db;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+}
+
+.logo img {
+    max-width: 100px;
+
+}
+
+h1 {
+  margin:0;
+    padding:0;
+    font-size: 24px;
+    font-weight: normal;
+}
+#logout {
+    margin-top: 10px;
+}
+
+nav {
+    background-color: #3498db;
+    padding: 10px;
+    text-align: center;
+    margin-left:-10px;
+    flex-grow: 1; /* Allow the nav to take remaining space */
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
+
+}
+
+a:hover {
+    color: #ecf0f1;
+    text-decoration:underline;
+}
+            #userPanel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+#userImage {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent; 
+    }
+#userImage img{
+    width: 200%;
+     height: 140%;
+
+}
+#userOptions {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 999;
+}
+#userOptionsTriangle {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+}
+#userOptions ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#userOptions ul li a {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+}
+#userOptions ul li a:hover {
+    background-color: #f7f7f7;
+}
+#settings {
+    display: none;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 999;
+    padding: 20px;
+}
+#settings form {
+    margin: 0;
+}
+#settings form .form-group {
+    margin-bottom: 20px;
+}
+#settings form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+#settings form .form-control {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+#settings form .form-control-file {
+    display: block;
+    margin-top: 5px;
+}
+#settings form .btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#settings form .form-text.text-muted {
+    font-size: 0.8em;
+    color: #6c757d;
+}
+.filter-section {
+    background-color: #f0f0f0; /* Change this to your preferred color */
+    padding: 20px; /* Adjust padding as needed */
+    width: 100%; /* Adjust width as needed */
+}
+
+#filterForm label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#filterForm input[type="text"],
+#filterForm select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#filterForm input[type="button"] {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#productTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#productTable th,
+#productTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#productTable th {
+    background-color: #4CAF50;
+    color: white;
+}
+h2 {
+    color: #333; /* Change this to your preferred color */
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+select, input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.quantity-control {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.cart {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.cart h3 {
+    margin-bottom: 20px;
+}
+
+.cart table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart table th, .cart table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.cart .total {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cart button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.total {
+    background-color: #f0f0f0; /* Change this to your preferred color */
+    padding: 10px;
+    margin-top: 20px;
+}
+.sales-history {
+    background-color: #f9f9f9;
+    padding: 20px;
+ width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.sales-history h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.filter-options {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.filter-options label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.filter-options input[type="date"],
+.filter-options select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-options button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.transaction-log {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.transaction-log ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+#salesLogTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#salesLogTable th,
+#salesLogTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#salesLogTable th {
+    background-color: #4CAF50;
+    color: white;
+}
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+/* Responsive styling */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    /* Stack form fields vertically on small screens */
+    label, select, input[type="text"], input[type="number"], button {
+        display: block;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    /* Make the cart and sales history sections full width */
+    .cart, .sales-history {
+        width: 100%;
+    }
+
+    /* Make the table scroll horizontally on small screens */
+    .table-responsive {
+        overflow-x: auto;
+    }
+}

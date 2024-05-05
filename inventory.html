@@ -1,0 +1,623 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Inventory Management</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css">
+    <link rel="stylesheet" href="inventory.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript" src="inventory.js"></script>
+    <script type="text/javascript" src="addProducts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="inventory.php">
+                <img src="j.png" alt="Your Company Logo">
+            </a>
+        </div>
+        <h1>PaJoy Uniform Inventory</h1>
+        <nav>
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#orders">Orders</a></li>
+                <li><a href="#reports">Reports</a></li>
+            </ul>
+        </nav>
+
+        <?php
+        session_start();
+
+        $dbname = "pajoy";
+        $username = "root";
+        $password = "";
+        $servername = "localhost";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        if (isset($_SESSION['username'])) {
+            $sql = "SELECT * FROM users WHERE username = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $_SESSION['username']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $_SESSION['email'] = $row['email'];
+                $_SESSION['profileImage'] = $row['profileImage'];
+                $_SESSION['user_id'] = $row['user_id'];
+            }
+        }
+        ?>
+
+        <div id="userPanel">
+            <div id="userImage">
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    $sql = "SELECT * FROM users WHERE user_id = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param('i', $_SESSION['user_id']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $user = $result->fetch_assoc();
+                    echo '<img src="' . $user['profileImage'] . '" alt="User Image" onclick="toggleUserOptions()">';
+                } else {
+                    echo '<img src="default_image.png" alt="User Image" onclick="toggleUserOptions()">';
+                }
+                ?>
+            </div>
+            <div id="userOptions">
+                <div id="userOptionsTriangle"></div>
+                <ul>
+                    <li><a href="sign.php">Add user</a> 
+                    <li><a href="#" onclick="toggleSettings()">Settings</a></li>
+                    <li><a href="logout.php" id="logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+<style>
+    #profilePic:hover {
+    cursor: pointer;
+}
+</style>
+        <div id="settings">
+            <button id="closeForm" style="position: absolute; right: 0;">X</button>
+            <form action="update_profile.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="usernameSettings">Username:</label>
+                    <input type="text" id="usernameSettings" class="form-control" name="username" value="<?php echo isset($_SESSION['username']) ? $_SESSION['username'] : ''; ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailSettings">Email:</label>
+                    <input type="email" id="emailSettings" class="form-control" name="email" value="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : ''; ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" class="form-control" name="newPassword">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </header>
+<script>
+    document.getElementById('userImage').addEventListener('mouseenter', function() {
+    document.getElementById('userOptions').style.display = 'block';
+});
+
+document.getElementById('userPanel').addEventListener('mouseleave', function() {
+    document.getElementById('userOptions').style.display = 'none';
+});
+document.getElementById('closeForm').addEventListener('click', function() {
+    document.getElementById('settings').style.display = 'none';
+});
+    </script>
+    <main>
+        <section id="dashboard">
+            <h2>Dashboard</h2>
+
+            <div id="dashboardStats">
+                <div class="dashboardStat">
+                    <h3>Products</h3>
+                    <p id="productCount">Loading...</p>
+                </div>
+                <div id="dashboardStats">
+                    <?php
+                    $result = $conn->query("SELECT SUM(stock) AS totalQuantity FROM products WHERE category = 'sweaters'");
+                    $row = $result->fetch_assoc();
+                    $totalQuantity = $row['totalQuantity'];
+                    ?>
+                    <div class="dashboardStat">
+                        <h3>Users</h3>
+                        <p id="Users">Loading...</p>
+                    </div>
+                    <?php
+                    $result = $conn->query("SELECT SUM(stock) AS totalQuantity FROM products WHERE category = 'trucksuits'");
+                    $row = $result->fetch_assoc();
+                    $totalQuantity = $row['totalQuantity'];
+                    ?>
+                    <div class="dashboardStat">
+                        <h3>Trucksuits</h3>
+                        <p id="trucksuits">Loading...<?php echo $totalQuantity; ?></p>
+                    </div>
+                    <div class="dashboardStat">
+                        <h3>Revenue</h3>
+                        <p id="revenue">Loading...</p>
+                    </div>
+                    <?php
+                    $result = $conn->query("SELECT SUM(stock) AS totalQuantity FROM products");
+                    $row = $result->fetch_assoc();
+                    $totalQuantity = $row['totalQuantity'];
+                    ?>
+                    <div class="dashboardStat">
+                        <h3>Total Quantity</h3>
+                        <p id="gettotalQuantity"><?php echo $totalQuantity; ?></p>
+                    </div>
+                    <div class="dashboardStat">
+                        <h3>Low Stock Alerts</h3>
+                        <p id="lowStockAlerts">Loading...</p>
+                    </div>
+                    <?php
+                    $sql = "SELECT * FROM orders WHERE status = 'Not shipped'";
+                    $result = $conn->query($sql);
+
+                    $pendingOrders = [];
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $pendingOrders[] = $row;
+                        }
+                    }
+                    ?>
+                    <div class="dashboardStat">
+                        <h3>Pending Orders</h3>
+                        <p id="pendingOrders"><?php echo count($pendingOrders); ?></p>
+                    </div>
+                    <div class="dashboardStat">
+                        <h3>Total Value of Items in Shop</h3>
+                        <p id="totalValue">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="products">
+            <h2>Product Management</h2>
+            <br>
+            <form id="productForm" method="post" action="process-form.php">
+                <label for="shopNumberP">Shop Number:</label>
+                <select id="shopNumberP" name="shopNumber[]" required>
+                    <option value="">Select Shop Number</option>
+                    <option value="1">Shop 1</option>
+                    <option value="2">Shop 2</option>
+                </select>
+
+                <label for="productCategoryFilter">Product Category:</label>
+                <select id="productCategoryFilter" name="productCategory[]">
+                    <option value="All">All</option>
+                    <option value="shirts">Shirts</option>
+                    <option value="dresses">Dress</option>
+                    <option value="longsleeves">Long Sleeves</option>
+                    <option value="suspenders">Suspenders</option>
+                    <option value="skirts">Skirts</option>
+                    <option value="tunic">Tunic</option>
+                    <option value="sweaters">Sweaters</option>
+                    <option value="trucksuits">Trucksuits</option>
+                    <option value="Shoes">Shoes</option>
+                    <option value="T-shirts">T-shirts</option>
+                    <option value="Tie">Tie</option>
+                    <option value="jumper">jumper</option>
+                </select>
+                <div id="collarOptions" style="display: none;">
+                    <select id="collar" name="collar[]">
+                        <option value="all">All Collars</option>
+                        <option value="Wango">Wango</option>
+                        <option value="yellow">yellow</option>
+                        <option value="white">white</option>
+                    </select>
+                </div>
+                <input type="text" id="productColorFilter" placeholder="ProductColor" name="productColor[]" required>
+                <input type="text" id="productSizeFilter" placeholder="ProductSize" name="productSize[]" required>
+                <input type="text" id="productQuantityFilter" placeholder="ProductQuantity" name="productQuantity[]" required>
+                <input type="text" id="productPriceFilter" placeholder="ProductPrice" name="productPrice[]" required>
+
+                <button type="button" onclick="newSubForm()">Add Another Product</button>
+
+                <div id="productFields"></div>
+                <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
+                <button type="submit">Add Product</button>
+            </form>
+
+            <script>
+                    function newSubForm() {
+    var productFields = document.getElementById('productFields');
+    var newSubForm = document.createElement('div');
+
+    newSubForm.innerHTML = `
+        <label for="shopNumberP">Shop Number:</label>
+        <select id="shopNumberP" name="shopNumber[]" required>
+            <option value="">Select Shop Number</option>
+            <option value="1">Shop 1</option>
+            <option value="2">Shop 2</option>
+        </select>
+
+        <label for="productCategoryFilter">Product Category:</label>
+        <select id="productCategoryFilter" name="productCategory[]">
+        <option value="All">All</option>
+                    <option value="shirts">Shirts</option>
+                    <option value="dresses">Dress</option>
+                    <option value="longsleeves">Long Sleeves</option>
+                    <option value="suspenders">Suspenders</option>
+                    <option value="skirts">Skirts</option>
+                    <option value="tunic">Tunic</option>
+                    <option value="sweaters">Sweaters</option>
+                    <option value="trucksuits">Trucksuits</option>
+                    <option value="Shoes">Shoes</option>
+                    <option value="T-shirts">T-shirts</option>
+                    <option value="Tie">Tie</option>
+                    <option value="jumper">jumper</option>
+        </select>
+
+        <div id="collarOptions" style="display: none;">
+                    <select id="collar" name="collar[]">
+                        <option value="all">All Collars</option>
+                        <option value="Wango">Wango</option>
+                        <option value="yellow">yellow</option>
+                        <option value="white">white</option>
+                    </select>
+                </div>
+                <input type="text" id="productColorFilter" placeholder="ProductColor" name="productColor[]" required>
+                <input type="text" id="productSizeFilter" placeholder="ProductSize" name="productSize[]" required>
+                <input type="text" id="productQuantityFilter" placeholder="ProductQuantity" name="productQuantity[]" required>
+                <input type="text" id="productPriceFilter" placeholder="ProductPrice" name="productPrice[]" required>
+    `;
+
+    productFields.appendChild(newSubForm);
+}
+                let productCategorySelect = document.getElementById('productCategoryFilter');
+
+                productCategorySelect.addEventListener('change', function() {
+                    let selectedCategory = this.value;
+                    let collarOptions = document.getElementById('collarOptions');
+
+                    if (selectedCategory === 'dresses') {
+                        collarOptions.style.display = 'block';
+                    } else {
+                        collarOptions.style.display = 'none';
+                    }
+                });
+            </script>
+
+            <form id="filterForm">
+                <label for="categoryFilter">Category:</label>
+                <select name="category" id="categoryFilter">
+                    <option value="All">All</option>
+                    <option value="shirts">Shirts</option>
+                    <option value="dress">Dress</option>
+                    <option value="longsleeves">Long Sleeves</option>
+                    <option value="suspenders">Suspenders</option>
+                    <option value="skirts">Skirts</option>
+                    <option value="tunic">Tunic</option>
+                    <option value="sweaters">Sweaters</option>
+                    <option value="trucksuits">Trucksuits</option>
+                    <option value="Shoes">Shoes</option>
+                    <option value="T-shirts">T-shirts</option>
+                    <option value="Tie">Tie</option>
+                    <option value="jumper">jumper</option>
+                </select>
+                <br><br>
+                <label for="shopNumber">Shop Number:</label>
+                <select name="shopNumber" id="shopNumber">
+                    <option value="All">All</option>
+                    <option value="1">Shop 1</option>
+                    <option value="2">Shop 2</option>
+                </select>
+                <br><br>
+                <label for="sizeFilter">Size:</label>
+                <input type="text" id="sizeFilter" placeholder="Size">
+                <br><br>
+                <label for="colorFilter">Color:</label>
+                <input type="text" id="colorFilter" placeholder="Color">
+                <br><br>
+         </form>
+            <table id="productTable">
+                <thead>
+                    <tr>
+                        <th>Shop No</th>
+                        <th>Product ID</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Color</th>
+                        <th>Size</th>
+                        <th>Status</th>
+                        <th>Price</th>
+                        <th>last_updated</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+            <button id="highlightLowStock" onclick="highlightLowStock()">Highlight Low Stock</button>
+            
+            <script>
+                
+                const filterForm = document.getElementById('filterForm');
+const categoryFilter = document.getElementById('categoryFilter');
+const shopNumber = document.getElementById('shopNumber');
+const sizeFilter = document.getElementById('sizeFilter');
+const colorFilter = document.getElementById('colorFilter');
+const tableBody = document.getElementById('tableBody');
+
+// Event listeners
+categoryFilter.addEventListener('change', updateTable);
+shopNumber.addEventListener('change', updateTable);
+sizeFilter.addEventListener('keyup', updateTable); 
+colorFilter.addEventListener('keyup', updateTable);
+
+function updateTable() {
+    const category = categoryFilter.value;
+    const shop = shopNumber.value;
+    const size = sizeFilter.value;
+    const color = colorFilter.value;
+
+    // Build the URL with filters
+    const url = `/fetchProducts.php?category=${category}&shop=${shop}&size=${size}&color=${color}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            updateTableBody(data);
+        });
+}
+
+function updateTableBody(data) {
+    tableBody.innerHTML = ''; // Clear the table body
+
+    data.forEach(product => {
+        const row = tableBody.insertRow();
+        // Create cells with the data you need to display
+        const shopCell = row.insertCell();
+        shopCell.textContent = product.shopNo;
+        // ... add cells for the rest of the product data
+    });
+}
+
+// Initial table loading (optional)
+updateTable(); 
+
+                function highlightLowStock() {
+                    var rows = document.getElementById("productTable").getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+                    for (var i = 0; i < rows.length; i++) {
+                        var quantityCell = rows[i].getElementsByTagName("td")[3];
+                        var quantity = parseInt(quantityCell.textContent);
+
+                        if (quantity <= 10) {
+                            rows[i].style.backgroundColor = "yellow";
+                        }
+                    }
+                }
+            </script>
+        </section>
+        <section id="orders">
+            <h2>Order Management</h2>
+
+            <form id="orderForm" method="post" action="order.php">
+                <label for="customerName">Customer Name:</label>
+                <input type="text" id="customerName" name="customerName" required>
+                <label for="categoryOrder">Category:</label>
+                <select id="categoryOrder">
+                    <option value="All">All</option>
+                    <option value="shirts">Shirts</option>
+                    <option value="dress">Dress</option>
+                    <option value="longsleeves">Long Sleeves</option>
+                    <option value="suspenders">Suspenders</option>
+                    <option value="skirts">Skirts</option>
+                    <option value="tunic">Tunic</option>
+                    <option value="sweaters">Sweaters</option>
+                    <option value="trucksuits">Trucksuits</option>
+                </select>
+                <label for="colorOrder">Color:</label>
+                <input type="text" id="colorOrder" name="color" required>
+                <label for="sizeOrder">Size:</label>
+                <input type="text" id="sizeOrder" name="size" required>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" required>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" required>
+                <button type="submit">Place Order</button>
+            </form>
+
+            <table id="orderTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "pajoy";
+                    try {
+                        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                        $stmt = $conn->prepare("SELECT * FROM orders");
+                        $stmt->execute();
+                        $orders = $stmt->fetchAll();
+
+                        foreach ($orders as $order) {
+                            echo "<tr>";
+                            echo "<td>" . $order['order_id'] . "</td>";
+                            echo "<td>" . $order['customerName'] . "</td>";
+                            echo "<td>" . $order['category'] . "</td>";
+                            echo "<td>" . $order['quantity'] . "</td>";
+                            echo "<td>" . $order['size'] . "</td>";
+                            echo "<td>" . $order['color'] . "</td>";
+                            echo "<td>" . $order['price'] . "</td>";
+                            echo "<td>" . $order['orderDate'] . "</td>";
+                            echo "<td>" . $order['status'] . "</td>";
+                            echo "<td>";
+                            echo "<button class='markAsShipped' data-id='" . $order['order_id'] . "' style='margin-right: 10px; background-color:green;'><i class='fas fa-truck'></i></button>";
+                            echo "<button class='deleteButton' data-id='" . $order['order_id'] . "'><i class='fas fa-trash'></i></button>";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+                    $conn = null;
+                    ?>
+                </tbody>
+            </table>
+            <div class="form-row">
+                <div class="col">
+                </div>
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" class="form-control">
+            </div>
+            <div class="col">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" class="form-control">
+            </div>
+            </div>
+            <input type="button" value="Update Table" onclick="updateOrders()">
+
+            <table id="ordersTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersBody"></tbody>
+            </table>
+            <p class="mt-3">Total Orders: <span id="totalOrders" class="font-weight-bold">0</span></p>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        </section>
+
+        <section id="reports">
+            <h2 class="report-heading">Reports</h2>
+            <div class="report-section">
+                <div id="dateRangeSection" class="report-subsection">
+                    <h3 class="subsection-heading">Date Range</h3>
+                    <p id="dateRangeDisplay" class="date-range-display"></p>
+                    <form id="dateForm">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" id="startDate">
+                        <label for="endDate" class="margin-left-label">End Date:</label>
+                        <input type="date" id="endDate">
+                        <label for="categoryReport" class="margin-left-label">Category:</label>
+                        <select id="categoryReport">
+                            <option value="all">All</option>
+                            <option value="shirts">Shirts</option>
+                            <option value="dress">Dress</option>
+                            <option value="longsleeves">Long Sleeves</option>
+                            <option value="suspenders">Suspenders</option>
+                            <option value="skirts">Skirts</option>
+                            <option value="tunic">Tunic</option>
+                            <option value="sweaters">Sweaters</option>
+                            <option value="trucksuits">Trucksuits</option>
+                        </select>
+                        <label for="colorReport">Color:</label>
+                        <input type="text" id="colorReport" name="color" required>
+                        <label for="sizeReport">Size:</label>
+                        <input type="text" id="sizeReport" name="size" required>
+                        <button type="button" onclick="updateReport()">Generate Report</button>
+                    </form>
+                </div>
+
+                <div id="salesSummarySection" class="report-subsection">
+                    <h3 class="subsection-heading">Sales Summary</h3>
+                    <div id="salesInfo" class="sales-info">
+                        <p><strong>Total Sales:</strong> $<span id="totalSales">0.00</span></p>
+                        <p><strong>Profit/Loss:</strong> $<span id="profitLoss">0.00</span></p>
+                        <p><strong>Most Sold Item:</strong> <span id="mostSoldItem">N/A</span></p>
+                    </div>
+                    <canvas id="salesChart" class="sales-chart"></canvas>
+                </div>
+            </div>
+        </section>
+        <section id="lastSignIn">
+            <h2>Last Sign-in Information</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Last Sign-in</th>
+                        <th>Last Sign-out</th>
+                        <th>Profile Picture</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "pajoy";
+                    try {
+                        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                        $stmt = $conn->prepare("SELECT * FROM users ORDER BY last_login DESC LIMIT 5");
+                        $stmt->execute();
+                        $lastSignInUsers = $stmt->fetchAll();
+
+                        foreach ($lastSignInUsers as $user) {
+                            echo "<tr>";
+                            echo "<td>" . $user['user_id'] . "</td>";
+                            echo "<td>" . $user['username'] . "</td>";
+                            echo "<td>" . $user['last_login'] . "</td>";
+                            echo "<td>" . $user['last_logout'] . "</td>";
+                            echo "<td><img src='" . $user['profileImage'] . "' alt='User Image'></td>";
+                            echo "</tr>";
+                        }
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+                    $conn = null;
+                    ?>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright &copy; <?php echo date("Y"); ?> Pajoy Uniform</p>
+    </footer>
+    <script src="script.js"></script>
+    <script type="text/javascript" src="table2excel.js"></script>
+</body>
+</html>

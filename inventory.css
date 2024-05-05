@@ -1,0 +1,1020 @@
+#userSettingsForm {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color:#333;
+    }
+
+input[type='text'], input[type='email'], select {
+    width: 100%;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-control-file {
+    display: block;
+    margin-top: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.form-text.text-muted {
+    font-size: 0.8em;
+    color: #6c757d;
+}
+#userPanel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+#userImage {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent; 
+    }
+#userImage img{
+    width: 200%;
+     height: 140%;
+
+}
+#userOptions {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 999;
+}
+#userOptionsTriangle {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+}
+#userOptions ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#userOptions ul li a {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+}
+#userOptions ul li a:hover {
+    background-color: #f7f7f7;
+}
+#settings {
+    display: none;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 999;
+    padding: 20px;
+}
+#settings form {
+    margin: 0;
+}
+#settings form .form-group {
+    margin-bottom: 20px;
+}
+#settings form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+#settings form .form-control {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+#settings form .form-control-file {
+    display: block;
+    margin-top: 5px;
+}
+#settings form .btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#settings form .form-text.text-muted {
+    font-size: 0.8em;
+    color: #6c757d;
+}
+#productForm {
+    width: 100%;
+  
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+}
+#productFields > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#productFields > div > input, #productFields > div > select {
+    width: 65%;
+}
+#productFields > button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+#productFields >button:hover {
+    background-color: #45a049; /* Darker green */
+}
+#ordersTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#ordersTable th, #ordersTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#ordersTable th {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Style for the date inputs */
+.form-row .col {
+    margin-bottom: 20px;
+}
+
+.form-row .col label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-row .col input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Style for the total orders */
+.mt-3 {
+    margin-top: 30px;
+}
+
+#totalOrders {
+    color: #4CAF50;
+}
+#reports {
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.report-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.report-section h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+.report input
+{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.report-section p {
+    color: #666;
+    margin: 5px 0;
+    font-size: 1.1em;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+#editModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#editModal .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+#editModal .modal-content input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#editModal .modal-content button {
+    display: block;
+    margin: 10px 0;
+}
+
+#editModal .modal-content .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#editModal .modal-content .close:hover,
+#editModal .modal-content .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+body, h1, h2, p, select, input, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Overall section styling */
+#products {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Form styling */
+#productForm {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#productForm label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+#productForm select,
+#productForm input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#productForm button,
+#productForm button:hover {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+/* Table styling */
+#productTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#productTable th,
+#productTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#productTable th {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Interactive elements styling */
+#interactiveElements {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#highlightLowStock,
+#exportCSV {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#highlightLowStock:hover,
+#exportCSV:hover {
+    background-color: #45a049;
+}
+
+/* Search and Total Quantity styling */
+#search {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Icon button styling */
+.icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+    margin-right: 3px; /* Adjust the margin between icons if needed */
+}
+
+.icon-button i {
+    font-size: 20px;
+}
+
+.edit-button i {
+    color: #3498db;
+}
+
+.remove-button i {
+    color: red;
+}
+
+.icon-button:hover i {
+    opacity: 0.8;
+}
+
+#editProductModal{
+    display: none;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #3498db;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+}
+
+.logo img {
+    max-width: 100px;
+
+}
+
+h1 {
+  margin:0;
+    padding:0;
+    font-size: 24px;
+    font-weight: normal;
+}
+#logout {
+    margin-top: 10px;
+}
+
+nav {
+    background-color: #3498db;
+    padding: 10px;
+    text-align: center;
+    margin-left:-10px;
+    flex-grow: 1; /* Allow the nav to take remaining space */
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
+
+}
+
+a:hover {
+    color: #ecf0f1;
+    text-decoration:underline;
+}
+/* Overall section styling */
+#orders {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Order Form styling */
+#orderForm {
+    margin-bottom: 20px;
+}
+
+#orderForm label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+#orderForm input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+#orderForm button {
+    background-color: #3498db;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#orderForm button:hover {
+    background-color: #2980b9;
+}
+
+/* Order Table styling */
+#orderTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#orderTable th, #orderTable td {
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+}
+
+#orderTable th {
+    background-color: #3498db;
+    color: white;
+}
+
+#orderTable button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#orderTable button:hover {
+    background-color: #c0392b;
+}
+
+/* Order Interactive Elements styling */
+#orderInteractiveElements {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#orderInteractiveElements label {
+    margin-right: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+#orderInteractiveElements input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+#orderInteractiveElements button {
+    background-color: #2ecc71;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#orderInteractiveElements button:hover {
+    background-color: #27ae60;
+}
+
+/* Additional styling for dynamic content sections (Most Ordered Products, Low Stock Products, Order Statistics) */
+#mostOrderedProducts,
+#lowStockProducts,
+#orderStatistics {
+    margin-top: 20px;
+}
+/* Reset some default styles */
+.popup {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.popup p {
+    margin: 0;
+}
+
+.popup label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.popup input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.popup small {
+    display: block;
+    font-size: small;
+}
+
+.popup button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.popup button:hover {
+    background-color: #45a049;
+}
+/* Reset some default styles */
+body, h1, h2, p, select, input, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Overall dashboard styling */
+#dashboard {
+    margin: 10px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Stats container styling */
+#dashboardStats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+/* CSS */
+.fas {
+    color: #333; /* Change the color of the icons */
+    font-size: 20px; /* Change the size of the icons */
+}
+
+/* Style for the remove button */
+#removeButton .fas {
+    color: red;
+}
+
+/* Style for the add button */
+#addButton .fas {
+    color: green;
+}
+/* Individual stat box styling */
+.dashboardStat {
+    flex: 0 0 calc(33.33% - 10px); /* Adjust width as needed */
+    margin: 10px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.dashboardStat:hover {
+    transform: scale(1.05);
+}
+
+.dashboardStat h3 {
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #333;
+}
+
+.dashboardStat p {
+    font-size: 20px;
+    font-weight: bold;
+    color: #3498db; /* Adjust color as needed */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboardStat {
+        flex: 0 0 100%; /* Full width on smaller screens */
+    }
+}
+#reports {
+    margin: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Report headings */
+#reports h2, #reports h3 {
+    color: #3498db;
+}
+
+/* Sales Report styling */
+#salesReport {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#salesReport:hover {
+    background-color: #ecf0f1;
+}
+
+/* Profit and Loss Report styling */
+#profitLossReport {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#profitLossReport:hover {
+    background-color: #ecf0f1;
+}
+
+#profitLossChart {
+    width: 100%;
+    max-width: 600px; /* Adjust the maximum width as needed */
+    height: auto;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+}
+
+#profitLossChart:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Report styling */
+#customReport {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#customReport:hover {
+    background-color: #ecf0f1;
+}
+
+/* Custom Report Form styling */
+#customReportForm {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#customReportForm label {
+    flex: 0 0 100%;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+#customReportForm select,
+#customReportForm input {
+    flex: 0 0 calc(50% - 10px);
+    margin-right: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+#customReportForm select:hover,
+#customReportForm input:hover {
+    border-color: #3498db;
+}
+
+#customReportForm button {
+    flex: 1;
+    margin-top: 15px;
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#customReportForm button:hover {
+    background-color: #2980b9;
+}
+
+/* Custom Report Content styling */
+#customReportContent {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#customReportContent:hover {
+    background-color: #ecf0f1;
+}
+#register
+{
+    margin: 20px;
+padding: 20px;
+background-color: #ffffff;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+#register form
+{
+    display: flex;
+flex-wrap: wrap;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+background-color: #f0f0f0;
+}
+
+#registerForm label,
+#registerForm input,
+#registerForm button {
+display: block;
+margin-bottom: 10px;
+}
+#registerForm label {
+flex: 0 0 100%;
+margin-bottom: 8px;
+font-size: 14px;
+color: #555;
+}
+#registerForm input {
+flex: 0 0 calc(50% - 10px);
+margin-right: 10px;
+padding: 8px;
+border: 1px solid #ccc;
+border-radius: 4px;
+transition: border-color 0.3s ease;
+}
+#registerForm button {
+flex: 1;
+margin-top: 15px;
+background-color: #3498db;
+color: white;
+padding: 10px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+#registerForm button:hover {
+background-color: #45a049;
+color: #fff;
+}
+#registerForm small {
+color: #999;
+}
+#usersTableContainer {
+margin: 20px;
+padding: 20px;
+background-color: #ffffff;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#usersTable {
+width: 100%;
+border-collapse: collapse;
+}
+
+#usersTable th, #usersTable td {
+padding: 10px;
+border: 1px solid #ccc;
+}
+
+#usersTable th {
+background-color: #3498db;
+color: #fff;
+}
+#usersTable img
+{
+width: 50px;
+height: 50px;
+border-radius: 50%;    
+}
+#lastSignIn {
+margin: 20px;
+padding: 20px;
+background-color: #ffffff;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#lastSignIn h2 {
+text-align: center;
+color: #333;
+margin-bottom: 20px;
+}
+
+#lastSignIn table {
+width: 100%;
+border-collapse: collapse;
+}
+
+#lastSignIn th, #lastSignIn td {
+padding: 10px;
+border: 1px solid #ccc;
+}
+
+#lastSignIn th {
+background-color: #3498db;
+color: white;
+}
+
+#lastSignIn tr:nth-child(even) {
+background-color: #f2f2f2;
+}
+
+#lastSignIn img {
+width: 50px;
+height: 50px;
+border-radius: 50%;
+}
+footer {
+background-color: #f2f2f2;
+text-align: center;
+padding: 10px;
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+}

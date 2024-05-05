@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('us.png'); /* Replace 'background-image.jpg' with your image file path */
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 400px;
+    margin: 100px auto; /* Adjust the margin to center the container vertically */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8); /* Add background color with opacity for better readability */
+    text-align: center;
+    color: #000;
+}
+
+.container img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form div {
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"], form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form .error {
+    color: #f00;
+    margin-top: 5px;
+}
